@@ -31,7 +31,7 @@ configuration = Configuration(access_token=channel_access_token)
 parser = WebhookParser(channel_secret)
 
 # Mock DB mapping User ID to TDX credentials
-MOCK_DB = {
+MOCK_DB: dict = {
     # "U1234567890abcdef...": {"client_id": "YOUR_TDX_CLEINT_ID", "client_secret": "YOUR_TDX_CLIENT_SECRET"}
 }
 
@@ -87,7 +87,7 @@ async def handle_location_message(event):
             await line_bot_api.reply_message(
                 ReplyMessageRequest(
                     reply_token=event.reply_token,
-                    messages=[TextMessage(text="附近 2 公里內找不到停車場。")]
+                    messages=[TextMessage(text="附近 1 公里內找不到停車場。")]
                 )
             )
             return

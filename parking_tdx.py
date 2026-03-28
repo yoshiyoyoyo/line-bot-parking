@@ -1,6 +1,6 @@
 import httpx
 import math
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Any
 import os
 
 TOKEN_URL = "https://tdx.transportdata.tw/auth/realms/TDXConnect/protocol/openid-connect/token"
@@ -76,7 +76,7 @@ def calculate_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> fl
     return R * c
 
 
-async def get_nearby_parking(lat: float, lon: float, client_id: str, client_secret: str, radius: int = 2000) -> List[Dict]:
+async def get_nearby_parking(lat: float, lon: float, client_id: str, client_secret: str, radius: int = 1000) -> List[Dict[str, Any]]:
     token = await get_tdx_token(client_id, client_secret)
     if not token:
         return []
@@ -92,7 +92,7 @@ async def get_nearby_parking(lat: float, lon: float, client_id: str, client_secr
             # 1. Fetch static data via NearBy API (Advanced v1)
             static_url = "https://tdx.transportdata.tw/api/advanced/v1/Parking/OffStreet/CarPark/NearBy"
             params = {
-                "$spatialFilter": f"nearby({lat}, {lon}, {radius})",
+                "$spatialFilter": f"nearby({lat}, {lon}, {min(radius, 1000)})",
                 "$format": "JSON"
             }
             static_res = await client.get(static_url, headers=headers, params=params)
@@ -158,3 +158,4 @@ async def get_nearby_parking(lat: float, lon: float, client_id: str, client_secr
         except Exception as e:
             print(f"Error fetching parking data: {e}")
             return []
+    return []

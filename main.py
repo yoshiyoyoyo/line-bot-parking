@@ -87,7 +87,7 @@ async def handle_location_message(event):
             await line_bot_api.reply_message(
                 ReplyMessageRequest(
                     reply_token=event.reply_token,
-                    messages=[TextMessage(text="附近 500 公尺內找不到停車場。")]
+                    messages=[TextMessage(text="附近 2 公里內找不到停車場。")]
                 )
             )
             return

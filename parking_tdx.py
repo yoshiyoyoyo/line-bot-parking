@@ -76,7 +76,7 @@ def calculate_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> fl
     return R * c
 
 
-async def get_nearby_parking(lat: float, lon: float, client_id: str, client_secret: str, radius: int = 500) -> List[Dict]:
+async def get_nearby_parking(lat: float, lon: float, client_id: str, client_secret: str, radius: int = 2000) -> List[Dict]:
     token = await get_tdx_token(client_id, client_secret)
     if not token:
         return []
